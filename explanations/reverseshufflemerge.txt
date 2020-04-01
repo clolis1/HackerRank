@@ -1,0 +1,110 @@
+/=====================\
+|Reverse Shuffle Merge|
+\=====================/
+
+Given a string, A, we define some operations on the string as follows:
+
+a. reverse(A) denotes the string obtained by reversing string A. Example: reverse("abc") = "cba"
+
+b. shuffle(A) denotes any string that's a permutation of string A. Example: 
+   shuffle("god") [element of] ['god', 'gdo', 'ogd', 'ogd', 'dgo', dog']
+
+c. merge(A1, A2) denotes any string that's obtained by interspersing the two strings A1 & A2, maintaining the order of characters in both.
+For example, A1 = "abc" & A2 = "def", one possible result of merge(A1, A2) could be "abcdef", another could be "abdecf", another could be "adbecf" and so on.
+
+Given a string s such that s [elementof] merge(reverse(A), shuffle(A)) for some string A, find the lexicographically smallest A.
+
+For example, s = abab.
+We can split it into two strings of ab.
+The reverse is ba and we need to find a string to shuffle in to get abab.
+The middle two characters match our reverse string, leaving the a and b at the ends.
+Our shuffle string needs to be ab. Lexicographically ab < ba, so our answer is ab.
+
+Function Description
+
+Complete the reverseShuffleMerge function in the editor below.
+It must return the lexicographically smallest string fitting the criteria.
+
+reverseShuffleMerge has the following parameter(s):
+
+s: a string
+
+Input Format
+
+A single line containing the string a.
+
+Constraints
+
+a contains only lower-case English letters, ascii[a-z]
+1 <= |s| <= 10000
+
+Output Format
+
+Find and return the string which is the lexicographically smallest valid .
+
+Sample Input 0
+
+eggegg
+
+Sample Output 0
+
+egg
+
+Explanation 0
+
+Split "eggegg" into strings of like character counts: "egg", "egg"
+reverse("egg") = "gge"
+shuffle("egg") can be "egg"
+"eggegg" belongs to the merge of ("gge", "egg")
+
+The merge is: e[gge]gg.
+
+'egg' < 'gge'
+
+Sample Input 1
+
+abcdefgabcdefg
+
+Sample Output 1
+
+agfedcb
+
+Explanation 1
+
+Split the string into two strings with like characters:  and .
+Reverse abcdefg = gfedcba
+Shuffle agfedcb can be bcdefga
+Merge to a[bcdefga]bcdefg
+
+Sample Input 2
+
+aeiouuoiea
+
+Sample Output 2
+
+aeiou
+
+Explanation 2
+
+Split the string into groups of like characters: 
+Reverse aeiou = uoiea
+These merge to aeiou[uoiea]
+
+/===========\
+|Explanation|
+\===========/
+
+This problem requires you to identify the lexicographically earliest set of characters that can be the reverse of A.
+Every string will contain an even amount of letters due to the merge between shuffle(A) and reverse(A), which are both mutations of A.
+
+We will start by looking for the lexicograhically earliest word that involves every letter in A, starting at the end of given input S.
+Since we want to find the lexicogrpahically earliest form of A, we can also search for the lexicographically latest form of reverse(A).
+It's easier to compare and choose lexicographically earlier chars, so we will parse through the string S in reverse.
+The final word that we form will actually be an lexicographiclly early instance of reverse(A) that we created in reverse, which is the same as A written forwards.
+
+Every char must be included a set number of times, so as we parse through the string S, we will eventually find that we cannot skip any further chars in our search for an earlier example.
+In this situation, we might comb through the buffer we have created and choose the lexicographically earliest char, and then cull the chars before it.
+This repeats until we return to the initial stopping point.
+
+There is an exception to this algorithm: When a char being checked during the buffer traversal is the same as the char that triggered the traversal,
+we must omit the later instance of the char from this particular traversal, i.e. we begin growing our buffer again instead of finishing the traversal.
