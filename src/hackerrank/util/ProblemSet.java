@@ -51,6 +51,14 @@ public class ProblemSet {
         probs.put("alternatingcharacters", new AlternatingCharacters());
         probs.put("sherlockandthevalidstring", new SherlockAndTheValidString());
         probs.put("specialstringagain", new SpecialStringAgain());
+        probs.put("commonchild", new CommonChild());
+        probs.put("minimumabsolutedifferenceinanarray", new MinimumAbsoluteDifferenceInAnArray());
+        probs.put("luckbalance", new LuckBalance());
+        probs.put("greedyflorist", new GreedyFlorist());
+        probs.put("maxmin", new MaxMin());
+        probs.put("reverseshufflemerge", new ReverseShuffleMerge());
+        probs.put("roadsandlibraries", new RoadsAndLibraries());
+        probs.put("findthenearestclone", new FindTheNearestClone());
     }
     
     // Returns the associated Problem from the array, or null if it does not.
